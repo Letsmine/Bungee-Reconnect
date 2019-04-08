@@ -24,7 +24,7 @@
 	<repositories>
 		<repository>
 			<id>bungeecord-repo</id>
-			<url>http://nexus.codecrafter47.dyndns.eu/content/repositories/snapshots/net/md-5/</url>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -32,8 +32,7 @@
 			<groupId>net.md-5</groupId>
 			<artifactId>bungeecord-bootstrap</artifactId>
 			<version>1.12-SNAPSHOT</version>
-			<scope>system</scope>
-             <systemPath>${project.basedir}/bungeecord-bootstrap-1.12-20170923.081054-27.jar</systemPath>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<properties>
