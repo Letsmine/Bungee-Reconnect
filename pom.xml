@@ -24,7 +24,7 @@
 	<repositories>
 		<repository>
 			<id>bungeecord-repo</id>
-			<url>http://nexus.codecrafter47.dyndns.eu/content/repositories/snapshots/</url>
+			<url>http://nexus.codecrafter47.dyndns.eu/content/repositories/snapshots</url>
 		</repository>
 	</repositories>
 	<dependencies>
