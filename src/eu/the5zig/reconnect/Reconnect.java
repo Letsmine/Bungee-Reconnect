@@ -29,11 +29,14 @@ import java.util.regex.Pattern;
 
 public class Reconnect extends Plugin implements Listener {
 
-	private String reconnectingTitle = "&7Reconnecting{%dots%}";
+	private String reconnectingTitle = "";
+	private String reconnectingSubtitle = "&7Reconnecting{%dots%}";
 	private String reconnectingActionBar = "&a&lPlease do not leave! &7Reconnecting to server{%dots%}";
-	private String connectingTitle = "&aConnecting..";
+    private String connectingTitle = "";
+	private String connectingSubtitle = "&aConnecting..";
 	private String connectingActionBar = "&7Connecting you to the server..";
-	private String failedTitle = "&cReconnecting failed!";
+    private String failedTitle = "";
+	private String failedSubtitle = "&cReconnecting failed!";
 	private String failedActionBar = "&eYou have been moved to the fallback server!";
 	private int delayBeforeTrying = 60000;
 	private int maxReconnectTries = 20;
@@ -78,17 +81,24 @@ public class Reconnect extends Plugin implements Listener {
 					return;
 				}
 
-				reconnectingTitle = configuration.getString("reconnecting-text.title", reconnectingTitle);
+                reconnectingTitle = configuration.getString("reconnecting-text.title", reconnectingTitle);
+				reconnectingSubtitle = configuration.getString("reconnecting-text.subtitle", reconnectingSubtitle);
 				reconnectingActionBar = configuration.getString("reconnecting-text.actionbar", reconnectingActionBar);
-				connectingTitle = configuration.getString("connecting-text.title", connectingTitle);
+
+                connectingTitle = configuration.getString("connecting-text.title", connectingTitle);
+				connectingSubtitle = configuration.getString("connecting-text.subtitle", connectingSubtitle);
 				connectingActionBar = configuration.getString("connecting-text.actionbar", connectingActionBar);
-				failedTitle = configuration.getString("failed-text.title", failedTitle);
+
+                failedTitle = configuration.getString("failed-text.title", failedTitle);
+				failedSubtitle = configuration.getString("failed-text.subtitle", failedSubtitle);
 				failedActionBar = configuration.getString("failed-text.actionbar", failedActionBar);
+
 				delayBeforeTrying = configuration.getInt("delay-before-trying", delayBeforeTrying);
 				maxReconnectTries = Math.max(configuration.getInt("max-reconnect-tries", maxReconnectTries), 1);
 				reconnectMillis = Math.max(configuration.getInt("reconnect-time", reconnectMillis), 0);
 				reconnectTimeout = Math.max(configuration.getInt("reconnect-timeout", reconnectTimeout), 1000);
 				ignoredServers = configuration.getStringList("ignored-servers");
+
 				String shutdownText = configuration.getString("shutdown.text");
 				if (Strings.isNullOrEmpty(shutdownText)) {
 					shutdownMessage = null;
@@ -222,24 +232,36 @@ public class Reconnect extends Plugin implements Listener {
 		return reconnectTasks.containsKey(uuid);
 	}
 
-	public String getReconnectingTitle() {
-		return ChatColor.translateAlternateColorCodes('&', reconnectingTitle);
+    public String getReconnectingTitle() {
+        return ChatColor.translateAlternateColorCodes('&', reconnectingTitle);
+    }
+
+	public String getReconnectingSubtitle() {
+		return ChatColor.translateAlternateColorCodes('&', reconnectingSubtitle);
 	}
 
 	public String getReconnectingActionBar() {
 		return ChatColor.translateAlternateColorCodes('&', reconnectingActionBar);
 	}
 
-	public String getConnectingTitle() {
-		return ChatColor.translateAlternateColorCodes('&', connectingTitle);
+    public String getConnectingTitle() {
+        return ChatColor.translateAlternateColorCodes('&', connectingTitle);
+    }
+
+	public String getConnectingSubtitle() {
+		return ChatColor.translateAlternateColorCodes('&', connectingSubtitle);
 	}
 
 	public String getConnectingActionBar() {
 		return ChatColor.translateAlternateColorCodes('&', connectingActionBar);
 	}
 
-	public String getFailedTitle() {
-		return ChatColor.translateAlternateColorCodes('&', failedTitle);
+    public String getFailedTitle() {
+        return ChatColor.translateAlternateColorCodes('&', failedTitle);
+    }
+
+	public String getFailedSubtitle() {
+		return ChatColor.translateAlternateColorCodes('&', failedSubtitle);
 	}
 
 	public String getFailedActionBar() {

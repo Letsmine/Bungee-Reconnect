@@ -1,5 +1,5 @@
 name: Reconnect
-version: 1.0.3
+version: ${project.version}
 main: eu.the5zig.reconnect.Reconnect
-author: 5zig (Development), Krymonota (Contribution), Terrobility (Addition Configs), krusic22 (1.12.2 Fix)
-website: https://github.com/5zig/Bungee-Reconnect
+author: 5zig, Krymonota, Terrobility, krusic22, Maythiwat
+website: https://github.com/maythiwat/Bungee-Reconnect

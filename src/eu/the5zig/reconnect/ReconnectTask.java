@@ -62,7 +62,7 @@ public class ReconnectTask {
 				user.sendMessage(bungee.getTranslation("server_went_down"));
 
 				// Send fancy title if it's enabled in config, otherwise reset the connecting title.
-				if (!instance.getFailedTitle().isEmpty())
+				if (!instance.getFailedSubtitle().isEmpty())
 					user.sendTitle(createFailedTitle());
 				else
 					user.sendTitle(ProxyServer.getInstance().createTitle().reset());
@@ -95,7 +95,7 @@ public class ReconnectTask {
 		visualTries++;
 
 		// Send fancy Title
-		if (!instance.getReconnectingTitle().isEmpty()) {
+		if (!instance.getReconnectingSubtitle().isEmpty()) {
 			createReconnectTitle().send(user);
 		}
 
@@ -115,7 +115,7 @@ public class ReconnectTask {
 					instance.cancelReconnectTask(user.getUniqueId());
 
 					// Send fancy Title
-					if (!instance.getConnectingTitle().isEmpty()) {
+					if (!instance.getConnectingSubtitle().isEmpty()) {
 						createConnectingTitle().send(user);
 					}
 
@@ -163,8 +163,8 @@ public class ReconnectTask {
 	 */
 	private Title createReconnectTitle() {
 		Title title = ProxyServer.getInstance().createTitle();
-		title.title(EMPTY);
-		title.subTitle(new TextComponent(instance.getReconnectingTitle().replace("{%dots%}", getDots())));
+		title.title(new TextComponent(instance.getReconnectingTitle().replace("{%dots%}", getDots())));
+		title.subTitle(new TextComponent(instance.getReconnectingSubtitle().replace("{%dots%}", getDots())));
 		// Stay at least as long as the longest possible connect-time can be.
 		title.stay((instance.getReconnectMillis() + instance.getReconnectTimeout() + 1000) / 1000 * 20);
 		title.fadeIn(0);
@@ -187,8 +187,8 @@ public class ReconnectTask {
 	 */
 	private Title createConnectingTitle() {
 		Title title = ProxyServer.getInstance().createTitle();
-		title.title(EMPTY);
-		title.subTitle(new TextComponent(instance.getConnectingTitle()));
+		title.title(new TextComponent(instance.getConnectingTitle().replace("{%dots%}", getDots())));
+		title.subTitle(new TextComponent(instance.getConnectingSubtitle()));
 		title.stay(20);
 		title.fadeIn(10);
 		title.fadeOut(10);
@@ -210,8 +210,8 @@ public class ReconnectTask {
 	 */
 	private Title createFailedTitle() {
 		Title title = ProxyServer.getInstance().createTitle();
-		title.title(EMPTY);
-		title.subTitle(new TextComponent(instance.getFailedTitle()));
+		title.title(new TextComponent(instance.getFailedTitle().replace("{%dots%}", getDots())));
+		title.subTitle(new TextComponent(instance.getFailedSubtitle()));
 		title.stay(80);
 		title.fadeIn(10);
 		title.fadeOut(10);
@@ -252,7 +252,7 @@ public class ReconnectTask {
 	 */
 	public void cancel() {
 		if (instance.isUserOnline(user)) {
-			if (!Strings.isNullOrEmpty(instance.getReconnectingTitle()) || !Strings.isNullOrEmpty(instance.getConnectingTitle())) {
+			if (!Strings.isNullOrEmpty(instance.getReconnectingSubtitle()) || !Strings.isNullOrEmpty(instance.getConnectingSubtitle())) {
 				// For some reason, we have to reset and clear the title, so it completely disappears -> BungeeCord bug?
 				bungee.createTitle().reset().clear().send(user);
 			}
