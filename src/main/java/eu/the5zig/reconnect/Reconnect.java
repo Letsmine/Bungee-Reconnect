@@ -10,6 +10,7 @@ import net.md_5.bungee.ServerConnection;
 import net.md_5.bungee.UserConnection;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -29,15 +30,15 @@ import java.util.regex.Pattern;
 
 public class Reconnect extends Plugin implements Listener {
 
-	private String reconnectingTitle = "";
-	private String reconnectingSubtitle = "&7Reconnecting{%dots%}";
-	private String reconnectingActionBar = "&a&lPlease do not leave! &7Reconnecting to server{%dots%}";
-    private String connectingTitle = "";
-	private String connectingSubtitle = "&aConnecting..";
-	private String connectingActionBar = "&7Connecting you to the server..";
-    private String failedTitle = "";
-	private String failedSubtitle = "&cReconnecting failed!";
-	private String failedActionBar = "&eYou have been moved to the fallback server!";
+	private String reconnectingTitle = "&6&lReconnecting";
+	private String reconnectingSubtitle = "&ePlease do not leave! &7Reconnecting to server...";
+	private String reconnectingActionBar = "&7Reconnecting, Please wait{%dots%}";
+    private String connectingTitle = "&a&lConnecting";
+	private String connectingSubtitle = "&7Connecting you to the server...";
+	private String connectingActionBar = "&7Connecting, Please wait{%dots%}";
+    private String failedTitle = "&c&lConnection Failed";
+	private String failedSubtitle = "&7You have been moved to the &efallback server";
+	private String failedActionBar = "";
 	private int delayBeforeTrying = 60000;
 	private int maxReconnectTries = 20;
 	private int reconnectMillis = 5000;
@@ -58,6 +59,11 @@ public class Reconnect extends Plugin implements Listener {
 
 		// load Configuration
 		loadConfig();
+
+		// little information
+		getProxy().getConsole().sendMessage(new TextComponent("§b[Reconnect] §eBungeecord-Reconnect §6(Maythiwat's fork)"));
+        getProxy().getConsole().sendMessage(new TextComponent("§b[Reconnect] §eJenkins: §6https://ci.demza.info/"));
+        getProxy().getConsole().sendMessage(new TextComponent("§b[Reconnect] §eGitHub: §6https://github.com/maythiwat/Bungee-Reconnect"));
 	}
 
 	/**

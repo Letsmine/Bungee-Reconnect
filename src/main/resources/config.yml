@@ -1,3 +1,8 @@
+#
+# Bungee-Reconnect
+# https://github.com/maythiwat/Bungee-Reconnect
+#
+
 # Reconnect --- config file
 # In this file, you can setup some basic settings for the plugin.
 
@@ -11,25 +16,25 @@ version: 4
 # The text that should be displayed, when the plugin is trying to reconnect a player.
 # Leave empty if you don't wish any title or action bar message to be displayed.
 reconnecting-text:
-  title: ""
-  subtitle: "&7Reconnecting{%dots%}"
-  actionbar: "&a&lPlease do not leave! &7Reconnecting to server{%dots%}"
+  title: "&6&lReconnecting"
+  subtitle: "&ePlease do not leave! &7Reconnecting to server..."
+  actionbar: "&7Reconnecting, Please wait{%dots%}"
 
 # The text that should be displayed, when the plugin managed to establish a connection to
 # the previous server and now connects the player to it.
 # Leave empty if you don't wish any title or action bar message to be displayed.
 connecting-text:
-  title: ""
-  subtitle: "&aConnecting..."
-  actionbar: "&7Connecting you to the server..."
+  title: "&a&lConnecting"
+  subtitle: "&7Connecting you to the server..."
+  actionbar: "&7Connecting, Please wait{%dots%}"
 
 # The text that should be displayed, when the plugin didn't manage to etablish
 # a connection to the previous server and connected the player to the fallback server.
 # Leave empty if you don't wish any title or action bar message to be displayed.
 failed-text:
-  title: ""
-  subtitle: "&cReconnecting failed!"
-  actionbar: "&eYou have been moved to the fallback server!"
+  title: "&c&lConnection Failed"
+  subtitle: "&7You have been moved to the &efallback server"
+  actionbar: ""
 
 
 # The amount of milliseconds the plugin should wait before attempting to check if the server is alive.
