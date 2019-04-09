@@ -7,26 +7,42 @@
 	<packaging>jar</packaging>
 	<name>Bungee-Reconnect</name>
 	<description>A simple BungeeCord-Plugin that automatically tries to reconnect all players whenever a server restarts.</description>
+
+    <properties>
+        <revision>SNAPSHOT</revision>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
 	<build>
-		<finalName>${project.name}-${project.version}</finalName>
-		<sourceDirectory>src</sourceDirectory>
-		<resources>
-			<resource>
-				<targetPath>.</targetPath>
-				<directory>${basedir}/src/</directory>
-				<includes>
-					<include>bungee.yml</include>
-					<include>config.yml</include>
-				</includes>
-			</resource>
-		</resources>
-	</build>
+        <defaultGoal>clean package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
 	<repositories>
 		<repository>
 			<id>bungeecord-repo</id>
 			<url>http://nexus.codecrafter47.dyndns.eu/content/repositories/snapshots</url>
 		</repository>
 	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>net.md-5</groupId>
@@ -35,10 +51,4 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	<properties>
-        <revision>SNAPSHOT</revision>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
 </project>
