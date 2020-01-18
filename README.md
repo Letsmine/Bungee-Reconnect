@@ -5,7 +5,7 @@ BUILD
 ------
 git clone https://github.com/krusic22/Bungee-Reconnect.git <br>
 cd Bungee-Reconnect <br>
-wget http://nexus.codecrafter47.dyndns.eu/content/repositories/snapshots/net/md-5/bungeecord-bootstrap/1.12-SNAPSHOT/bungeecord-bootstrap-1.12-20170923.081054-27.jar <br>
+wget http://nexus.codecrafter47.dyndns.eu/content/repositories/snapshots/net/md-5/bungeecord-bootstrap/1.15-SNAPSHOT/bungeecord-bootstrap-1.15-20200118.071159-12.jar <br>
 mvn install <br>
 *The jar file will be inside the targer directory*
 
@@ -33,8 +33,8 @@ If you're a developer and want to cancel the reconnect-process for any reason, y
 
 Other
 ------
-Officially tested with **Waterfall #146** and **Paper 1.12.2-R0.1-SNAPSHOT #1217**.
-This plugin supports (officially) **BungeeCord 1.12.2** and **Spigot 1.12.2**!
+Officially tested with **BungeeCord #1448** and **Paper 1.15.1-R0.1-SNAPSHOT #50**.
+This plugin supports (officially) **BungeeCord 1.15** and **Spigot 1.15.1**!
 If you encounter any problems, please first make sure you update BungeeCord and Spigot before creating an issue report.
 Under certain circumstances, this plugin might work with older versions, but we <b>don't</b> support it officially.
 
