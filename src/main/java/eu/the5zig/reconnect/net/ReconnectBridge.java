@@ -9,6 +9,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.config.ServerInfo;
+import net.md_5.bungee.api.event.ServerConnectEvent.Reason;
 import net.md_5.bungee.api.event.ServerKickEvent;
 import net.md_5.bungee.chat.ComponentSerializer;
 import net.md_5.bungee.connection.CancelSendSignal;
@@ -51,9 +52,9 @@ public class ReconnectBridge extends DownstreamBridge {
 		if (!instance.fireServerReconnectEvent(user, server)) {
 			// Invoke default behaviour if event has been cancelled.
 
-			ServerInfo def = bungee.getServerInfo(user.getPendingConnection().getListener().getFallbackServer());
+			ServerInfo def = user.updateAndGetNextServer(server.getInfo());
 			if (server.getInfo() != def) {
-				user.connectNow(def);
+				user.connectNow(def, Reason.SERVER_DOWN_REDIRECT);
 				user.sendMessage(bungee.getTranslation("server_went_down"));
 			} else {
 				user.disconnect(Util.exception(t));
@@ -68,14 +69,14 @@ public class ReconnectBridge extends DownstreamBridge {
 	public void handle(Kick kick) throws Exception {
 		// This method is called whenever a Kick-Packet is sent from the Minecraft Server to the Minecraft Client.
 
-		ServerInfo def = bungee.getServerInfo(user.getPendingConnection().getListener().getFallbackServer());
+		ServerInfo def = user.updateAndGetNextServer(server.getInfo());
 		if (Objects.equal(server.getInfo(), def)) {
 			def = null;
 		}
 		// Call ServerKickEvent
 		ServerKickEvent event = bungee.getPluginManager().callEvent(new ServerKickEvent(user, server.getInfo(), ComponentSerializer.parse(kick.getMessage()), def, ServerKickEvent.State.CONNECTED));
 		if (event.isCancelled() && event.getCancelServer() != null) {
-			user.connectNow(event.getCancelServer());
+			user.connectNow(event.getCancelServer(), Reason.KICK_REDIRECT);
 		} else {
 			String kickMessage = ChatColor.stripColor(BaseComponent.toLegacyText(ComponentSerializer.parse(kick.getMessage()))); // needs to be parsed like that...
 			// doReconnect indicates whether the player should be reconnected or not after he has been kicked. Only if the kick reason matches the one that has been

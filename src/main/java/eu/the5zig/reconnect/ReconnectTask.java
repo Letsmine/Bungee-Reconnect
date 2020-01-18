@@ -14,16 +14,15 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.Title;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
+import net.md_5.bungee.api.event.ServerConnectEvent.Reason;
 import net.md_5.bungee.netty.PipelineUtils;
-//import net.md_5.bungee.protocol.packet.KeepAlive; - >KeepAlive in 1.12.2 - krusic22
 
+import java.net.InetSocketAddress;
 import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class ReconnectTask {
 
-	private static final Random RANDOM = new Random();
 	private static final TextComponent EMPTY = new TextComponent("");
 
 	private final Reconnect instance;
@@ -54,11 +53,11 @@ public class ReconnectTask {
 			// If we have reached the maximum reconnect limit, proceed BungeeCord-like.
 			instance.cancelReconnectTask(user.getUniqueId());
 
-			ServerInfo def = bungee.getServerInfo(user.getPendingConnection().getListener().getFallbackServer());
+			ServerInfo def = user.updateAndGetNextServer(server.getInfo());
 			if (target != def) {
 				// If the fallback-server is not the same server we tried to reconnect to, send the user to that one instead.
 				server.setObsolete(true);
-				user.connectNow(def);
+				user.connectNow(def, Reason.SERVER_DOWN_REDIRECT);
 				user.sendMessage(bungee.getTranslation("server_went_down"));
 
 				// Send fancy title if it's enabled in config, otherwise reset the connecting title.
@@ -147,10 +146,10 @@ public class ReconnectTask {
 		};
 
 		// Create a new Netty Bootstrap that contains the ChannelInitializer and the ChannelFutureListener.
-		Bootstrap b = new Bootstrap().channel(PipelineUtils.getChannel()).group(server.getCh().getHandle().eventLoop()).handler(initializer).option(ChannelOption.CONNECT_TIMEOUT_MILLIS, instance.getReconnectTimeout()).remoteAddress(target.getAddress());
+		Bootstrap b = new Bootstrap().channel(PipelineUtils.getChannel(target.getAddress())).group(server.getCh().getHandle().eventLoop()).handler(initializer).option(ChannelOption.CONNECT_TIMEOUT_MILLIS, instance.getReconnectTimeout()).remoteAddress(target.getAddress());
 
 		// Windows is bugged, multi homed users will just have to live with random connecting IPs
-		if (user.getPendingConnection().getListener().isSetLocalAddress() && !PlatformDependent.isWindows()) {
+		if (user.getPendingConnection().getListener().isSetLocalAddress() && !PlatformDependent.isWindows( )&& user.getPendingConnection().getListener().getSocketAddress() instanceof InetSocketAddress) {
 			b.localAddress(user.getPendingConnection().getListener().getHost().getHostString(), 0);
 		}
 		b.connect().addListener(listener);
