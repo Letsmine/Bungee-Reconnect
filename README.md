@@ -33,8 +33,8 @@ If you're a developer and want to cancel the reconnect-process for any reason, y
 
 Other
 ------
-Officially tested with **BungeeCord #1448** and **Paper 1.15.1-R0.1-SNAPSHOT #50**.
-This plugin supports (officially) **BungeeCord 1.15** and **Spigot 1.15.1**!
+Officially tested with **Waterfall #384** and **Paper 1.16.4-R0.1-SNAPSHOT #288**.
+This plugin supports (officially) **BungeeCord 1.16** and **Spigot 1.16.4**!
 If you encounter any problems, please first make sure you update BungeeCord and Spigot before creating an issue report.
 Under certain circumstances, this plugin might work with older versions, but we <b>don't</b> support it officially.
 
