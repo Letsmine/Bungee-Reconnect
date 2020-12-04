@@ -53,7 +53,7 @@ public class ReconnectTask {
 			// If we have reached the maximum reconnect limit, proceed BungeeCord-like.
 			instance.cancelReconnectTask(user.getUniqueId());
 
-			ServerInfo def = user.updateAndGetNextServer(server.getInfo());
+			ServerInfo def = user.updateAndGetNextServer(target);
 			if (target != def) {
 				// If the fallback-server is not the same server we tried to reconnect to, send the user to that one instead.
 				server.setObsolete(true);
@@ -149,7 +149,7 @@ public class ReconnectTask {
 		Bootstrap b = new Bootstrap().channel(PipelineUtils.getChannel(target.getAddress())).group(server.getCh().getHandle().eventLoop()).handler(initializer).option(ChannelOption.CONNECT_TIMEOUT_MILLIS, instance.getReconnectTimeout()).remoteAddress(target.getAddress());
 
 		// Windows is bugged, multi homed users will just have to live with random connecting IPs
-		if (user.getPendingConnection().getListener().isSetLocalAddress() && !PlatformDependent.isWindows( )&& user.getPendingConnection().getListener().getSocketAddress() instanceof InetSocketAddress) {
+		if (user.getPendingConnection().getListener().isSetLocalAddress() && !PlatformDependent.isWindows( ) && user.getPendingConnection().getListener().getSocketAddress() instanceof InetSocketAddress) {
 			b.localAddress(user.getPendingConnection().getListener().getHost().getHostString(), 0);
 		}
 		b.connect().addListener(listener);
